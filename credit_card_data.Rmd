@@ -1,0 +1,16 @@
+---
+title: "Credit Card Users"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#importing dataset
+
+data <- read.csv("BankChurners.csv")
+
+```
+
