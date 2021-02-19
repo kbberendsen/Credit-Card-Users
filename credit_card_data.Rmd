@@ -7,16 +7,110 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-#importing dataset
+```{r, include=FALSE}
+
+library('tidyverse')
+library('ggplot2')
+library('ggpubr')
+
+```
+
+```{r Dataset}
+
+# Importing dataset
 
 data <- read.csv("BankChurners.csv")
 
 ```
 
+```{r Categorial Variables To Percentages}
 
-```{r}
 
 
 ```
 
+
+```{r Percentage Attrited Customers}
+
+data %>%
+  count(Attrition_Flag) %>%
+  mutate(percent = n / sum(n) * 100)
+
+```
+
+```{r Summary Attrited Customers}
+
+attrited_customers <- data %>% 
+  filter(Attrition_Flag == "Attrited Customer")
+
+existing_customers <- data %>% 
+  filter(Attrition_Flag == "Existing Customer")
+
+
+summary(attrited_customers)
+
+```
+```{r Plot functions}
+
+# Storing numeric variables
+
+numeric_variables <- select_if(data, is.numeric)
+
+# Plot function. Needs an x variable and the variable name.
+
+plot <- function(variable_x, variable_name){
+  
+  # If else statement checking if the variable is numerical or categorical and drawing the corresponding graph.
+  
+  if(variable_x %in% numeric_variables){
+  
+    plot1 <- ggplot(data, aes(x = unlist(variable_x), color = Attrition_Flag, fill = Attrition_Flag)) +
+      geom_histogram(aes(y = ..density..), binwidth = 1, alpha = 0.5, position = "dodge") +
+      geom_density(alpha = 0.2) +
+      labs(title =  substitute(paste("Difference between Customer Types in terms of ", variable_name)), 
+           x = variable_name,
+           y = "Density",
+           fill = "Customer Type",
+           color = "Customer Type") +
+      theme_minimal() 
+  
+    plot2 <- plot1 + facet_grid(Attrition_Flag ~ .)
+    
+    ggarrange(plot1, plot2, 
+              ncol = 1, nrow = 2, 
+              heights = c(3, 5), 
+              common.legend = TRUE, legend = "bottom" )
+    
+  } else {
+    
+    ggplot(data, aes(x = Attrition_Flag, fill = unlist(variable_x))) +
+      geom_histogram(binwidth = 1, stat = "count", position = "fill", alpha = 0.5) +
+      labs(title =  substitute(paste("Difference between Customer Types in terms of ", variable_name)),
+           x = "Customer Type",
+           y = "Proportion",
+           fill = variable_name) +
+      theme_minimal() +
+      scale_y_continuous(labels = scales::percent_format())
+      
+  }
+}
+
+```
+
+```{r Numeric Plots, fig.width = 8, fig.height = 7, fig.align = 'center'}
+
+plot(data %>% select(Customer_Age), "Customer Age")
+plot(data %>% select(Months_on_book), "Months on Book")
+#plot(data %>% select(Credit_Limit), "Credit Limit")
+
+```
+
+```{r Categorical Plots, fig.width = 8, fig.height = 5, fig.align = 'center'}
+
+plot(data %>% select(Gender), "Gender")
+plot(data %>% select(Education_Level), "Education Level")
+plot(data %>% select(Marital_Status), "Marital Status")
+plot(data %>% select(Income_Category), "Income Category")
+plot(data %>% select(Card_Category), "Card_Category")
+
+```
