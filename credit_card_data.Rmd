@@ -33,8 +33,8 @@ existing_customers <- data %>% filter(Attrition_Flag == "Existing Customer")
 summary(attrited_customers)
 
 ggplot(data, aes(x = Customer_Age, color = Attrition_Flag)) +
-  geom_histogram(fill = "white", binwidth = 1) +
-  geom_density(alpha = .2, fill = 'green')
+  geom_histogram(aes(y = ..density..), fill = "white", binwidth = 1) +
+  geom_density(alpha = .2)
 
 ```
 
