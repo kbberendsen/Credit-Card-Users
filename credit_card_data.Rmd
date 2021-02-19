@@ -32,9 +32,19 @@ existing_customers <- data %>% filter(Attrition_Flag == "Existing Customer")
 
 summary(attrited_customers)
 
-ggplot(data, aes(x = Customer_Age, color = Attrition_Flag)) +
+histogram_nummeric <- function(variable_x){
+  plot <- ggplot(data, aes(x = variable_x, color = Attrition_Flag)) +
   geom_histogram(aes(y = ..density..), fill = "white", binwidth = 1) +
   geom_density(alpha = .2)
+
+  plot
+
+}
+
+histogram_nummeric(data$Customer_Age)
+histogram_nummeric(data$Months_on_book)
+
+
 
 ```
 
