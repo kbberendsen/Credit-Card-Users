@@ -25,9 +25,16 @@ data %>%
 ```
 
 ```{r}
-data %>%
-  filter(Attrition_Flag == "Attrited Customer") %>%
-  cor()
+#summary of attrited customers
+attrited_customers <- data %>% filter(Attrition_Flag == "Attrited Customer")
+existing_customers <- data %>% filter(Attrition_Flag == "Existing Customer")
+
+
+summary(attrited_customers)
+
+ggplot(data, aes(x = Customer_Age, color = Attrition_Flag)) +
+  geom_histogram(fill = "white", binwidth = 1) +
+  geom_density(alpha = .2, fill = 'green')
 
 ```
 
