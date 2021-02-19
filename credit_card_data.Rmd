@@ -35,7 +35,8 @@ summary(attrited_customers)
 histogram_nummeric <- function(variable_x){
   plot <- ggplot(data, aes(x = variable_x, color = Attrition_Flag)) +
   geom_histogram(aes(y = ..density..), fill = "white", binwidth = 1) +
-  geom_density(alpha = .2)
+  geom_density(alpha = .2) +
+  labs(x = deparse(substitute(Customer_Age)))
 
   plot
 
@@ -44,6 +45,7 @@ histogram_nummeric <- function(variable_x){
 histogram_nummeric(data$Customer_Age)
 histogram_nummeric(data$Months_on_book)
 
+deparse(substitute(Customer_Age))
 
 
 ```
