@@ -15,3 +15,13 @@ data <- read.csv("BankChurners.csv")
 
 ```
 
+```{r}
+
+data %>%
+  count(Attrition_Flag) %>%
+  mutate(percent = n / sum(n) * 100)
+
+
+
+```
+
