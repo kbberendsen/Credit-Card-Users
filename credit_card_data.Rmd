@@ -27,7 +27,7 @@ data %>%
 ```{r}
 data %>%
   filter(Attrition_Flag == "Attrited Customer") %>%
-  summary()
+  cor()
 
 ```
 
