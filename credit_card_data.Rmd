@@ -23,13 +23,6 @@ data <- read.csv("BankChurners.csv")
 
 ```
 
-```{r Categorial Variables To Percentages}
-
-
-
-```
-
-
 ```{r Percentage Attrited Customers}
 
 data %>%
@@ -50,6 +43,7 @@ existing_customers <- data %>%
 summary(attrited_customers)
 
 ```
+
 ```{r Plot functions}
 
 # Storing numeric variables
