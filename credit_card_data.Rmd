@@ -7,8 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, include=FALSE}
 
 library('tidyverse')
 library('ggplot2')
@@ -42,6 +41,7 @@ existing_customers <- data %>%
 summary(attrited_customers)
 
 ```
+
 ```{r Plot functions}
 
 # Storing numeric variables
@@ -75,14 +75,15 @@ plot <- function(variable_x, variable_name){
     
   } else {
     
-    ggplot(data, aes(x = unlist(variable_x), fill = Attrition_Flag)) +
-      geom_histogram(binwidth = 1, stat = "count", position = position_dodge(preserve = "single"), alpha = 0.5) +
+   ggplot(data, aes(x = Attrition_Flag, fill = unlist(variable_x))) +
+      geom_histogram(binwidth = 1, stat = "count", position = "fill", alpha = 0.5) +
       labs(title =  substitute(paste("Difference between Customer Types in terms of ", variable_name)),
-           x = variable_name,
-           y = "Count",
-           fill = "Customer Type") +
-      theme_minimal()
-    
+           x = "Customer Type",
+           y = "Proportion",
+           fill = variable_name) +
+      theme_minimal() +
+      scale_y_continuous(labels = scales::percent_format())
+      
   }
 }
 
@@ -100,6 +101,8 @@ plot(data %>% select(Months_on_book), "Months on Book")
 
 plot(data %>% select(Gender), "Gender")
 plot(data %>% select(Education_Level), "Education Level")
+plot(data %>% select(Marital_Status), "Marital Status")
 plot(data %>% select(Income_Category), "Income Category")
+plot(data %>% select(Card_Category), "Card_Category")
 
 ```
