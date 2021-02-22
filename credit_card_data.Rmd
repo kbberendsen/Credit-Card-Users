@@ -97,7 +97,7 @@ plot(data %>% select(Months_on_book), "Months on Book")
 
 ```
 
-```{r Categorical Plots, fig.width = 8, fig.height = 5, fig.align = 'center'}
+```{r Categorical Plots, fig.width = 6, fig.height = 5, fig.align = 'center'}
 
 plot(data %>% select(Gender), "Gender")
 plot(data %>% select(Education_Level), "Education Level")
