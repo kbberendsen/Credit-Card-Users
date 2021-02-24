@@ -108,3 +108,23 @@ plot(data %>% select(Income_Category), "Income Category")
 plot(data %>% select(Card_Category), "Card_Category")
 
 ```
+
+```{r Categorical Analysis}
+
+percentages <- function(variable_x) {
+  data %>%
+  group_by(Attrition_Flag, unlist(variable_x)) %>%
+  summarise(n = n()) %>%
+  mutate(prop = n/sum(n),
+         pct = scales::percent(prop))
+  
+}
+
+percentages(data$Gender)
+percentages(data$Education_Level)
+percentages(data$Marital_Status)
+percentages(data$Income_Category)
+percentages(data$Card_Category)
+
+```
+
